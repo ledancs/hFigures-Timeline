@@ -1,0 +1,276 @@
+<html>
+
+    <head>
+		<meta charset="UTF-8">
+		
+		<!-- Making sure a web page is not cached, across all browsers-->
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Expires" content="-1">
+		
+		<!-- jQuery -->
+		<script src="js/jquery.js"></script>
+		
+		<!-- Material CSS -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <!-- Include roboto.css to use the Roboto web font, material.css to include the theme and ripples.css to style the ripple effect -->
+        <link href="css/roboto.min.css" rel="stylesheet">
+        <link href="css/material.min.css" rel="stylesheet">
+        <link href="css/ripples.min.css" rel="stylesheet">
+		
+		<!-- Material JS -->
+        <script src="js/bootstrap.js"></script>
+		<script src="js/material.min.js"></script>
+		<script src="js/ripples.min.js"></script>
+
+        <!-- jQuery UI -->
+        <script src="js/jquery-ui.js"></script>
+        <link href="css/jquery-ui.css" rel="stylesheet">
+
+		<!-- D3 -->
+		<style type="text/css">
+			.d3-tip {
+				line-height: 1;
+				font-weight: 600;
+				font-size: 12px;
+				padding: 4px;
+				background: rgba(0, 0, 0, 0.8);
+				color: #fff;
+				border-radius: 2px;
+			}
+			.curves-scroll{
+				height: 90%;
+				weight: 98%;
+				overflow-y: scroll;
+				overflow-x: hidden;
+			}
+			svg{
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+                cursor: default;
+			}
+		</style>
+		
+		<!-- timeline scripts and css -->
+			
+		<!-- Load jquery for ajax support -->
+		<script src="js/html5.js"></script>
+		<script src="js/vis.js"></script>
+		
+		<script src="js/moment.js"></script>
+		<link href="css/vis.css" rel="stylesheet" type="text/css" />
+
+		<!--tooltip-->	
+		<script src="ttooltip/script/jquery-ttooltip.js"></script>
+	
+		<link href="ttooltip/style/jquery-ttooltip.css" media="screen" rel="stylesheet" />
+		
+		
+		<!--change the style of each item depanding on the task type -->
+		<style type="text/css">
+
+			.vis.timeline .item.silver{ background-color:#BCA9F5; height:40px; margin-top:-15px; }
+			.vis.timeline .item.lightskyblue{ background-color: lightskyblue; height:40px; margin-top:-15px;}
+			.vis.timeline .item.lightgreen{ background-color: lightgreen; height:40px; margin-top:-15px;}
+			.vis.timeline .item.lemonchiffon{ background-color: lemonchiffon; height:40px; margin-top:-15px;}
+			.vis.timeline .item.Cyan{ background-color: Cyan; height:40px; margin-top:-15px;}
+			.vis.timeline .item.past {filter: alpha(opacity=50); opacity: 0.5;}
+
+			.vis.timeline .item {
+
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: 10pt;
+				box-shadow: 5px 5px 20px rgba(128,128,128, 0.5);
+				padding: 5px;
+			}
+			.vis.timeline .timeaxis .grid.odd {
+				background: #f5f5f5;
+			}
+			/* adding the circle to the customtime bar */
+			.vis.timeline .customtime div:first-child{
+				background-image: url('img/Tr.png');
+				background-repeat: no-repeat;
+				background-position: center bottom ;}
+			
+			#visualization {
+				position: relative;
+				
+			}
+
+			.menu {
+				position: absolute;
+				
+				top: 0;
+				right: 0;
+				margin: 5px;
+				z-index: 1;
+			}
+
+			.vis.timeline.item.range{margin-top: 15px;}	
+						
+			
+						
+						
+			.button_zoom{
+			 
+			  font-weight:bold;
+			 font-size:16px;
+			  color: #444;
+			  min-width: 20px;
+			  padding:5px;
+			  margin: 1px 6px;
+			  background-color: #fdfdfd;
+			  border: 1px solid #cdcdcd;
+			  cursor: pointer;
+			  border-radius: 3px;
+			  width: 25px;
+				height:25px;
+				Float:right;
+		 }
+		 .button_z{
+			 
+			  font-weight:bold;
+			font-size:12px;
+			  color: #444;
+			  min-width: 20px;
+			  padding:5px;
+			  margin: 1px 5px;
+			  background-color: #fdfdfd;
+			  border: 1px solid #cdcdcd;
+			  cursor: pointer;
+			  border-radius: 3px;
+			  Float:right;
+		 }
+				.test {
+				  width:100%;
+				  display:inline-block;
+				  overflow: auto; 
+				}
+		
+		#ui-datepicker-div { font-size: 11px; z-index: 9999999;} 
+		</style>
+
+        
+		<script>
+			$(function() {
+				$( ".datepicker" ).datepicker( {
+					 dateFormat: "dd-mm-yy"
+					});					  
+					});
+		</script>
+		
+		<!-- End of timeline scripts and css files -->
+		
+    </head>
+
+    <body style="overflow-x: hidden;margin-top: 0.6em; overflow-y: hidden;">
+
+        <!-- Your site -->
+
+		<div class="row">
+			<div class="col-lg-7">
+				<div class="panel panel-primary">
+				
+					<div class="panel-heading">
+					
+						<h3 class="panel-title">hGraph</h3>
+						
+					</div>
+					
+					<div class="panel-body hGraph-container" style="height: 43%;">
+					
+						
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-5">
+			
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Curves</h3>
+					</div>
+					<div class="panel-body curves-scroll" style="height: 43%;">
+					
+						<div class="curves-container"></div>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-1"></div>
+		</div>
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">Timeline</h3>
+					</div>
+					<div class="panel-body" style="height: 45%;">
+						<div class="test" ><div  style="float: left;" ><P> 
+								Time: <input type="text" id="move1" value="02-05-2015" size="10" class='datepicker ta'>
+								<input type="button" id="move" value="Show"/></P>
+								</div>
+								<div style="float:right;" ><P>
+								
+								Compare to your health in: <input type="text" id="timeB" value="02-05-2015" size="10" class='datepicker tb'>
+								<input type="button" id="moveB" value="Compare"/></P>
+								</div>
+								
+						</div>
+
+						<div id="visualization"> 
+						<div class="menu">
+								<input type="button" id="Monthly" value="Monthly" class='button_z'/><br>
+								<input type="button" id="Weekly" value="Weekly" class='button_z'/><br>
+								<input type="button" id="zoomIn" value="+" class='button_zoom'/><br>
+								<input type="button" id="zoomOut" value="-" class='button_zoom'/>
+								
+							</div></div>
+						<div id="loading">loading!...</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <!-- Your site ends -->
+		
+		<script charset="utf-8" src="js/tut-hgraph/d3.js"></script>
+		<script src="js/tut-hgraph/dataPatientDiabetes.js"></script>
+		<script src="js/tut-hgraph/hGraph.js"></script>
+		<script src="js/curves/d3.tip.v0.6.3.js"></script>
+		<script src="js/curves/curves.js"></script>
+		
+		
+        <script>
+            $(document).ready(function() {
+                // This command is used to initialize some elements and make them work properly
+                $.material.init();
+				// hGraph
+				var w = 790;
+				var className = "hGraph-container";
+                // first hGraph - this one is on the top with normal colors
+				var hGraphInstance = HealthGraph(groups, w, className); // from data.js
+                // hGraphInstance.update(1423742720); // send the timestamp as a parameter
+				 				
+                // second hGraph - this one is on the back with light colors
+				var additionalGraph = hGraphInstance.plotAt( 142079600);
+                // additionalGraph.update(1423742720); // send the timestamp as a parameter
+				
+				// create an instance of the curves
+				var c = Curves(725, 35, groups, "curves-container");
+				startTimeline(hGraphInstance,additionalGraph,c);
+                // move the custom line A which is a normal blue line
+				// c.moveCustomLineA( 1420798100 );
+                // move the custom line B which is a dotted blue line
+				// c.moveCustomLineB( 1420798300 );
+            });
+        </script>
+	<script src="js/timeline.js"></script>
+    </body>
+
+</html>

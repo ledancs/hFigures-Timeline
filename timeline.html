@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!-- Making sure a web page is not cached, across all browsers-->
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+	<META HTTP-EQUIV="Expires" CONTENT="-1">
+    <title>Timeline | Progress data</title>
+	<!--datePicker.js -->
+	<script src="Source/mootools-core.js" type="text/javascript"></script>
+	<script src="Source/mootools-more.js" type="text/javascript"></script>
+	<script src="Source/Locale.nl-NL.Date.js" type="text/javascript"></script>
+	<script src="Source/Picker.js" type="text/javascript"></script>
+	<script src="Source/Picker.Attach.js" type="text/javascript"></script>
+	<script src="Source/Picker.Date.js" type="text/javascript"></script>
+	<script src="js/moment.js"></script>
+	<link href="Source/style.css" rel="stylesheet" />
+	<link href="Source/datepicker_bootstrap/datepicker_bootstrap.css" rel="stylesheet">
+	<link  href="Source/datepicker_vista/datepicker_vista.css" rel="stylesheet" type="text/css" media="screen" />
+    
+	<!-- Load jquery for ajax support -->
+	<script src="js/html5.js"></script>
+    <script src="js/vis.js"></script>
+    <link href="css/vis.css" rel="stylesheet" type="text/css" />
+
+	<!--tooltip-->	
+	<script src="js/jquery.js"></script>
+	<script src="ttooltip/script/jquery-ttooltip.js"></script>
+	<link href="ttooltip/style/jquery-ttooltip.css" media="screen" rel="stylesheet" />
+	
+	<!--<script type="text/javascript" src="../../dist/js/tipped/tipped.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../dist/css/tipped/tipped.css"/>-->	
+    <!--change the style of each item depanding on the task type -->
+    <style type="text/css">
+
+        .vis.timeline .item.silver{ background-color:#BCA9F5; height:40px; margin-top:-15px; }
+        .vis.timeline .item.lightskyblue{ background-color: lightskyblue; height:40px; margin-top:-15px;}
+        .vis.timeline .item.lightgreen{ background-color: lightgreen; height:40px; margin-top:-15px;}
+        .vis.timeline .item.lemonchiffon{ background-color: lemonchiffon; height:40px; margin-top:-15px;}
+		.vis.timeline .item.Cyan{ background-color: Cyan; height:40px; margin-top:-15px;}
+		.vis.timeline .item.past {filter: alpha(opacity=50); opacity: 0.5;}
+
+        .vis.timeline .item {
+
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10pt;
+            box-shadow: 5px 5px 20px rgba(128,128,128, 0.5);
+            padding: 5px;
+        }
+        .vis.timeline .timeaxis .grid.odd {
+            background: #f5f5f5;
+        }
+        /* adding the circle to the customtime bar */
+        .vis.timeline .customtime div:first-child{
+            background-image: url('img/Tr.png');
+            background-repeat: no-repeat;
+            background-position: center bottom ;}
+		
+		#visualization {
+            position: relative;
+			
+        }
+
+        .menu {
+            position: absolute;
+			
+            top: 0;
+            right: 0;
+            margin: 5px;
+            z-index: 10;
+        }
+
+        .vis.timeline.item.range{margin-top: 15px;}	
+					
+		
+					
+					
+		.button_zoom{
+		 
+		  font-weight:bold;
+		 font-size:16px;
+		  color: #444;
+		  min-width: 20px;
+		  padding:5px;
+		  margin: 1px 6px;
+		  background-color: #fdfdfd;
+		  border: 1px solid #cdcdcd;
+		  cursor: pointer;
+		  border-radius: 3px;
+		  width: 25px;
+			height:25px;
+			Float:right;
+	 }
+	 .button_z{
+		 
+		  font-weight:bold;
+		font-size:12px;
+		  color: #444;
+		  min-width: 20px;
+		  padding:5px;
+		  margin: 1px 5px;
+		  background-color: #fdfdfd;
+		  border: 1px solid #cdcdcd;
+		  cursor: pointer;
+		  border-radius: 3px;
+		  Float:right;
+	 }
+			.test {
+			  width:100%;
+			  display:inline-block;
+			  overflow: auto; 
+			}
+	
+    </style>
+	
+  <script>
+		Locale.use('nl-NL');
+	
+	window.addEvent('domready', function(){
+			
+		new Picker.Date($$('.aa'), {
+			positionOffset: {x: 5, y: 0},
+			pickerClass: 'datepicker_vista',
+			useFadeInOut: !Browser.ie,
+			format:"%d-%m-%Y"
+		
+		});
+	});
+
+	</script>
+  
+</head>
+<body>
+<div class="test" ><div  style="float: left;" ><P> 
+		Time: <input type="text" id="move1" value="02-05-2015" size="10" class='aa ta'>
+		<input type="button" id="move" value="Show"/></P>
+		</div>
+		<div style="float:right;" ><P>
+		
+		Compare to your health in: <input type="text" id="timeB" value="02-05-2015" size="10" class='aa tb'>
+		<input type="button" id="moveB" value="Compare"/></P>
+		</div>
+		
+</div>
+
+<div id="visualization"> 
+<div class="menu">
+		<input type="button" id="Monthly" value="Monthly" class='button_z'/><br>
+		<input type="button" id="Weekly" value="Weekly" class='button_z'/><br>
+        <input type="button" id="zoomIn" value="+" class='button_zoom'/><br>
+        <input type="button" id="zoomOut" value="-" class='button_zoom'/>
+        
+    </div></div>
+<div id="loading">loading!...</div>
+<script src="js/timeline.js"></script>
+</body>
+</html>
